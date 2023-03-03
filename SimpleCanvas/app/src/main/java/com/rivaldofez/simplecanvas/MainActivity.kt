@@ -40,13 +40,17 @@ class MainActivity : AppCompatActivity() {
 //            mPaint
 //        )
 
-        mCanvas.clipRect(
-            mRect
-        )
+//        mCanvas.clipRect(
+//            mRect
+//        )
+
+        mCanvas.save()
+        mCanvas.clipOutRect(mRect)
 
         mPaint.color = ResourcesCompat.getColor(resources, R.color.teal_700, null)
         mCanvas.drawCircle((mBitmap.width/2).toFloat(), (mBitmap.height/2).toFloat(), 200f, mPaint)
 
+        mCanvas.restore()
 
         val mPaintText =  Paint(Paint.FAKE_BOLD_TEXT_FLAG)
         mPaintText.textSize = 20F
