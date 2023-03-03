@@ -41,6 +41,10 @@ class SeatsView: View {
     private val numberSeatPaint = Paint(Paint.FAKE_BOLD_TEXT_FLAG)
     private val titlePaint = Paint(Paint.FAKE_BOLD_TEXT_FLAG)
 
+    init {
+
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val halfOfHeight = height / 2
