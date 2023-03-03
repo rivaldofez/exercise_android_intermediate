@@ -24,23 +24,28 @@ class MainActivity : AppCompatActivity() {
         myImageView.setImageBitmap(mBitmap)
 
         val mCanvas = Canvas(mBitmap)
-
         mCanvas.drawColor(ResourcesCompat.getColor(resources, R.color.purple_500, null))
 
         val mPaint = Paint()
-        mPaint.color = ResourcesCompat.getColor(resources, R.color.teal_700, null)
-
-//        mCanvas.drawCircle((mBitmap.width/2).toFloat(), (mBitmap.height/2).toFloat(), 200f, mPaint)
-        mCanvas.drawCircle((mBitmap.width/2).toFloat(), (mBitmap.height/2).toFloat(), 200f, mPaint)
 
         mPaint.color = ResourcesCompat.getColor(resources, R.color.teal_200, null)
-        mCanvas.drawRect(
-            (mBitmap.width/2 - 100).toFloat(),
-            (mBitmap.height/2 - 100).toFloat(),
-            (mBitmap.width/2 + 100).toFloat(),
-            (mBitmap.height/2 + 100).toFloat(),
-            mPaint
+        val mRect = Rect()
+        mRect.set((mBitmap.width/2 - 100),
+            (mBitmap.height/2 - 100),
+            (mBitmap.width/2 + 100),
+            (mBitmap.height/2 + 100))
+
+//        mCanvas.drawRect(
+//            mRect,
+//            mPaint
+//        )
+
+        mCanvas.clipRect(
+            mRect
         )
+
+        mPaint.color = ResourcesCompat.getColor(resources, R.color.teal_700, null)
+        mCanvas.drawCircle((mBitmap.width/2).toFloat(), (mBitmap.height/2).toFloat(), 200f, mPaint)
 
 
         val mPaintText =  Paint(Paint.FAKE_BOLD_TEXT_FLAG)
