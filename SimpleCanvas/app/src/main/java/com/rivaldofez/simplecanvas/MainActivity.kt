@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -42,6 +43,18 @@ class MainActivity : AppCompatActivity() {
         )
 
 
+        val mPaintText =  Paint(Paint.FAKE_BOLD_TEXT_FLAG)
+        mPaintText.textSize = 20F
+        mPaintText.color = ResourcesCompat.getColor(resources, R.color.white, null)
+
+        val text = "Selamat Datang!"
+        val mBounds = Rect()
+        mPaintText.getTextBounds(text, 0, text.length, mBounds)
+
+        val x: Int = mBitmap.width/2 - mBounds.centerX()
+        val y: Int = mBitmap.height/2 - mBounds.centerY()
+
+        mCanvas.drawText(text, x.toFloat(), y.toFloat(), mPaintText)
 
     }
 }
