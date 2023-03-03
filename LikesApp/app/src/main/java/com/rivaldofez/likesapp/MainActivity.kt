@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
 
         showFace()
+        showEyes()
     }
 
     private fun showFace() {
@@ -44,5 +45,15 @@ class MainActivity : AppCompatActivity() {
 
         mPaint.color = ResourcesCompat.getColor(resources, R.color.yellow_right_skin, null)
         mCanvas.drawArc(face, 270F, 180F, false, mPaint)
+    }
+
+    private fun showEyes() {
+        mPaint.color = ResourcesCompat.getColor(resources, R.color.black, null)
+        mCanvas.drawCircle(halfOfWidth - 100F, halfOfHeight - 10F, 50F, mPaint)
+        mCanvas.drawCircle(halfOfWidth + 100F, halfOfHeight - 10F, 50F, mPaint)
+
+        mPaint.color = ResourcesCompat.getColor(resources, R.color.white, null)
+        mCanvas.drawCircle(halfOfWidth - 120F, halfOfHeight - 20F, 15F, mPaint)
+        mCanvas.drawCircle(halfOfWidth + 80F, halfOfHeight -20F, 15F, mPaint)
     }
 }
