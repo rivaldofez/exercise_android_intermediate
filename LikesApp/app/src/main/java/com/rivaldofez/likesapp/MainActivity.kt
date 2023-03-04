@@ -31,11 +31,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.imageView.setImageBitmap(mBitmap)
 
+        binding.like.setOnClickListener {
+            showFace()
+            showMouth(isHappy = true)
+            showEyes()
+        }
 
+        binding.dislike.setOnClickListener {
+            showFace()
+            showMouth(isHappy = false)
+            showEyes()
+        }
 
-        showFace()
-        showEyes()
-        showMouth(isHappy = false)
     }
 
     private fun showFace() {
@@ -50,33 +57,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun showEyes() {
         mPaint.color = ResourcesCompat.getColor(resources, R.color.black, null)
-        mCanvas.drawCircle(halfOfWidth - 100F, halfOfHeight - 10F, 50F, mPaint)
-        mCanvas.drawCircle(halfOfWidth + 100F, halfOfHeight - 10F, 50F, mPaint)
+        mCanvas.drawCircle(halfOfWidth - 100F, halfOfHeight - 100F, 50F, mPaint)
+        mCanvas.drawCircle(halfOfWidth + 100F, halfOfHeight - 100F, 50F, mPaint)
 
         mPaint.color = ResourcesCompat.getColor(resources, R.color.white, null)
-        mCanvas.drawCircle(halfOfWidth - 120F, halfOfHeight - 20F, 15F, mPaint)
-        mCanvas.drawCircle(halfOfWidth + 80F, halfOfHeight -20F, 15F, mPaint)
+        mCanvas.drawCircle(halfOfWidth - 120F, halfOfHeight - 120F, 15F, mPaint)
+        mCanvas.drawCircle(halfOfWidth + 80F, halfOfHeight -120F, 15F, mPaint)
     }
 
     private fun showMouth(isHappy: Boolean) {
         when (isHappy) {
             true -> {
                 mPaint.color = ResourcesCompat.getColor(resources, R.color.black, null)
-                val lip = RectF(halfOfWidth - 200F, halfOfHeight - 100F, halfOfWidth + 200F, halfOfHeight + 400F)
+                val lip = RectF(halfOfWidth - 200F, halfOfHeight - 300F, halfOfWidth + 200F, halfOfHeight + 200F)
                 mCanvas.drawArc(lip, 25F, 130F, false, mPaint)
 
                 mPaint.color = ResourcesCompat.getColor(resources, R.color.white, null)
-                val mouth = RectF(halfOfWidth - 180F, halfOfHeight, halfOfWidth + 180F, halfOfHeight + 380F)
+                val mouth = RectF(halfOfWidth - 180F, halfOfHeight -200, halfOfWidth + 180F, halfOfHeight + 180F)
                 mCanvas.drawArc(mouth, 25F, 130F, false, mPaint)
 
             }
             false -> {
                 mPaint.color = ResourcesCompat.getColor(resources, R.color.black, null)
-                val lip = RectF(halfOfWidth - 200F, halfOfHeight + 250F, halfOfWidth + 200F, halfOfHeight + 350F)
+                val lip = RectF(halfOfWidth - 200F, halfOfHeight + 20 , halfOfWidth + 200F, halfOfHeight + 350F)
                 mCanvas.drawArc(lip, 0F, -180F, false, mPaint)
 
                 mPaint.color = ResourcesCompat.getColor(resources, R.color.white, null)
-                val mouth = RectF(halfOfWidth - 180F, halfOfHeight + 260F, halfOfWidth + 180F, halfOfHeight + 330F)
+                val mouth = RectF(halfOfWidth - 180F, halfOfHeight + 40, halfOfWidth + 180F, halfOfHeight + 300F)
                 mCanvas.drawArc(mouth, 0F, -180F, false, mPaint)
             }
         }
