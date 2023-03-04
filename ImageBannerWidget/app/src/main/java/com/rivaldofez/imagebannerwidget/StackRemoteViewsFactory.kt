@@ -12,17 +12,17 @@ internal class StackRemoteViewsFactory(private val mContext: Context) : RemoteVi
 
     private val mWidgetItems = ArrayList<Bitmap>()
 
+    override fun onCreate() {
+
+    }
+
     override fun onDataSetChanged() {
+        //Ini berfungsi untuk melakukan refresh saat terjadi perubahan.
         mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.darth_vader))
         mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.star_wars_logo))
         mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.storm_trooper))
         mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.starwars))
         mWidgetItems.add(BitmapFactory.decodeResource(mContext.resources, R.drawable.falcon))
-
-    }
-
-    override fun onCreate() {
-
     }
 
     override fun onDestroy() {
@@ -34,30 +34,23 @@ internal class StackRemoteViewsFactory(private val mContext: Context) : RemoteVi
     override fun getViewAt(position: Int): RemoteViews {
         val rv = RemoteViews(mContext.packageName, R.layout.widget_item)
         rv.setImageViewBitmap(R.id.imageView, mWidgetItems[position])
+
         val extras = bundleOf(
             ImagesBannerWidget.EXTRA_ITEM to position
         )
         val fillInIntent = Intent()
         fillInIntent.putExtras(extras)
+
         rv.setOnClickFillInIntent(R.id.imageView, fillInIntent)
         return rv
     }
 
-    override fun getLoadingView(): RemoteViews {
+    override fun getLoadingView(): RemoteViews? = null
 
-    }
+    override fun getViewTypeCount(): Int = 1
 
-    override fun getViewTypeCount(): Int {
+    override fun getItemId(i: Int): Long = 0
 
-    }
-
-    override fun getItemId(p0: Int): Long {
-
-    }
-
-    override fun hasStableIds(): Boolean {
-
-    }
-
+    override fun hasStableIds(): Boolean = false
 
 }
