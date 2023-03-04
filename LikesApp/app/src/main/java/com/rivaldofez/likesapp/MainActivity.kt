@@ -1,9 +1,6 @@
 package com.rivaldofez.likesapp
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.res.ResourcesCompat
@@ -25,11 +22,15 @@ class MainActivity : AppCompatActivity() {
     private val right = mBitmap.width - left
     private val bottom = mBitmap.height.toFloat() - 150F
 
+    private val message = "Apakah kamu suka bermain?"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.imageView.setImageBitmap(mBitmap)
+        showText()
+
 
         binding.like.setOnClickListener {
             showFace()
@@ -64,6 +65,22 @@ class MainActivity : AppCompatActivity() {
         mCanvas.drawCircle(halfOfWidth - 120F, halfOfHeight - 120F, 15F, mPaint)
         mCanvas.drawCircle(halfOfWidth + 80F, halfOfHeight -120F, 15F, mPaint)
     }
+
+    private fun showText() {
+        val mPaintText = Paint(Paint.FAKE_BOLD_TEXT_FLAG).apply {
+            textSize = 50F
+            color = ResourcesCompat.getColor(resources, R.color.black, null)
+        }
+
+        val mBounds = Rect()
+        mPaintText.getTextBounds(message, 0, message.length, mBounds)
+
+        val x: Float = halfOfWidth - mBounds.centerX()
+        val y = 50F
+        mCanvas.drawText(message, x, y, mPaintText)
+    }
+
+
 
     private fun showMouth(isHappy: Boolean) {
         when (isHappy) {
