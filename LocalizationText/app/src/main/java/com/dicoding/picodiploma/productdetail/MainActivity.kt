@@ -1,4 +1,4 @@
-package com.rivaldofez.motiononboardingpage
+package com.dicoding.picodiploma.productdetail
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
