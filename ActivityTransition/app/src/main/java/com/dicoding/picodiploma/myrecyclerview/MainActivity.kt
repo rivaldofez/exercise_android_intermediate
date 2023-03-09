@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.picodiploma.myrecyclerview.adapter.ListHeroAdapter
+import com.dicoding.picodiploma.myrecyclerview.adapter.OnItemClickCallback
 import com.dicoding.picodiploma.myrecyclerview.model.Hero
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnItemClickCallback {
     private lateinit var rvHeroes: RecyclerView
     private val list = ArrayList<Hero>()
 
@@ -32,8 +33,11 @@ class MainActivity : AppCompatActivity() {
             rvHeroes.layoutManager = LinearLayoutManager(this)
         }
         val listHeroAdapter = ListHeroAdapter(list)
+        listHeroAdapter.setOnItemClickCallback(this)
         rvHeroes.adapter = listHeroAdapter
     }
+
+
 
     private val listHeroes: ArrayList<Hero>
         get() {
@@ -47,4 +51,6 @@ class MainActivity : AppCompatActivity() {
             }
             return listHero
         }
+
+
 }
