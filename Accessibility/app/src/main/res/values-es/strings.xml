@@ -19,7 +19,6 @@
 
     <string name="settingDescription">Cambiar idioma</string>
     <string name="previewDescription">"Imagen de zapatos"</string>
-    <string name="priceDescription">"%1$s euros"</string>
     <string name="storeDescription">De %1$s</string>
     <string name="sizeDescription">Talla  %1$s</string>
     <string name="colorDescription">Coloreado %1$s</string>

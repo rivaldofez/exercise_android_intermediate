@@ -18,7 +18,6 @@
 
     <string name="settingDescription">Ganti Bahasa</string>
     <string name="previewDescription">"Gambar Sepatu"</string>
-    <string name="priceDescription">"%1$s Rupiah"</string>
     <string name="storeDescription">Dari %1$s</string>
     <string name="sizeDescription">Berukuran %1$s</string>
     <string name="colorDescription">Berwarna %1$s</string>

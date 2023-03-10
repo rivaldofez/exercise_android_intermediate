@@ -18,7 +18,6 @@
 
     <string name="settingDescription">Change language</string>
     <string name="previewDescription">"Picture of Shoes"</string>
-    <string name="priceDescription">"%1$s Dollars"</string>
     <string name="storeDescription">From %1$s</string>
     <string name="sizeDescription">The size is  %1$s</string>
     <string name="colorDescription">The color is %1$s</string>
