@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
         setupAccessibility(product)
     }
 
-    private fun setupAccessibility(productModel: ProductModel) {
         private fun setupAccessibility(productModel: ProductModel) {
             productModel.apply {
                 binding.apply {
@@ -83,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                     storeTextView.contentDescription = getString(R.string.storeDescription, store)
                 }
             }
-        }
+
 
     }
 }
