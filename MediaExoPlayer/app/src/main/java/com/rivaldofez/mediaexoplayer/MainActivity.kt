@@ -2,6 +2,9 @@ package com.rivaldofez.mediaexoplayer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.util.Util
@@ -50,6 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
+        hideSystemUI()
         if (Util.SDK_INT <= 23 && player == null) {
             initializePlayer()
         }
@@ -68,5 +72,15 @@ class MainActivity : AppCompatActivity() {
             releasePlayer()
         }
     }
+
+    private fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, viewBinding.videoView).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
 }
+
+
 
