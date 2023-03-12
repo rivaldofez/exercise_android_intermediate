@@ -3,12 +3,15 @@ package com.dicoding.picodiploma.mycamera
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.dicoding.picodiploma.mycamera.databinding.ActivityMainBinding
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,6 +21,23 @@ class MainActivity : AppCompatActivity() {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
+
+    private val launcherIntentCameraX = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == CAMERA_X_RESULT) {
+            val myFile = it.data?.getSerializableExtra("picture") as File
+            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+//            val result = BitmapFactory.decodeFile(myFile.path)
+
+            val result = rotateBitmap(
+                BitmapFactory.decodeFile(myFile.path),
+                isBackCamera
+            )
+            binding.previewImageView.setImageBitmap(result)
+        }
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -75,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startCameraX() {
         val intent = Intent(this, CameraActivity::class.java)
-        startActivity(intent)
+        launcherIntentCameraX.launch(intent)
     }
 
 
