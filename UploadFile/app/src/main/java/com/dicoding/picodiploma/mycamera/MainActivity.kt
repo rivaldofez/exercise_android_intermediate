@@ -111,12 +111,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun uploadImage() {
         if (getFile != null) {
-
+            val file = reduceFileImage(getFile as File)
             val description = "Ini adalah deksripsi gambar".toRequestBody("text/plain".toMediaType())
-            val requestImageFile = getFile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "photo",
-                getFile!!.name,
+                file.name,
                 requestImageFile
             )
 
@@ -194,6 +194,10 @@ class MainActivity : AppCompatActivity() {
             val myFile = uriToFile(selectedImg, this@MainActivity)
             binding.previewImageView.setImageURI(selectedImg)
         }
+    }
+
+    private fun reduceFileImage(file: File): File {
+        return file
     }
 
 }
