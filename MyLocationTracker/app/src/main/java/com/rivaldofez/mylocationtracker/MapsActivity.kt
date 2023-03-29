@@ -14,6 +14,7 @@ import com.rivaldofez.mylocationtracker.databinding.ActivityMapsBinding
 import android.Manifest
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Looper
 import android.util.Log
@@ -22,6 +23,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.PolylineOptions
 import java.util.concurrent.TimeUnit
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -32,6 +34,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     private var isTracking = false
+    private var allLatLng = ArrayList<LatLng>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,6 +176,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
                     Log.d(TAG, "onLocationResult: " + location.latitude + ", " + location.longitude)
+                    val lastLatLng = LatLng(location.latitude, location.longitude)
+
+                    //draw polyline
+                    allLatLng.add(lastLatLng)
+                    mMap.addPolyline(
+                        PolylineOptions()
+                            .color(Color.RED)
+                            .width(10f)
+                            .addAll(allLatLng)
+                    )
                 }
             }
         }
