@@ -23,6 +23,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import java.util.concurrent.TimeUnit
 
@@ -35,6 +36,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationCallback: LocationCallback
     private var isTracking = false
     private var allLatLng = ArrayList<LatLng>()
+    private var boundsBuilder = LatLngBounds.Builder()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +61,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.btnStart.setOnClickListener {
             if (!isTracking) {
+                clearMaps()
                 updateTrackingStatus(true)
                 startLocationUpdates()
             } else {
@@ -171,6 +175,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
     }
 
+    private fun clearMaps() {
+        mMap.clear()
+        allLatLng.clear()
+        boundsBuilder = LatLngBounds.Builder()
+    }
+
+
     private fun createLocationCallback() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
@@ -186,6 +197,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             .width(10f)
                             .addAll(allLatLng)
                     )
+
+                    //set boundaries
+                    boundsBuilder.include(lastLatLng)
+                    val bounds: LatLngBounds = boundsBuilder.build()
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 64))
+
                 }
             }
         }
