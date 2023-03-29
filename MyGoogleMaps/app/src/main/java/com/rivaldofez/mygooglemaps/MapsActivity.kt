@@ -1,10 +1,12 @@
 package com.rivaldofez.mygooglemaps
 
+import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Camera
 import android.graphics.Canvas
 import android.graphics.Color
+import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +25,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.rivaldofez.mygooglemaps.databinding.ActivityMapsBinding
+import java.io.IOException
+import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -140,7 +144,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         tourismPlace.forEach { tourism ->
             val latLng = LatLng(tourism.latitude, tourism.longitude)
-            mMap.addMarker(MarkerOptions().position(latLng).title(tourism.name))
+            val addressName = getAddressName(tourism.latitude, tourism.longitude)
+            mMap.addMarker(MarkerOptions().position(latLng).title(tourism.name).snippet(addressName))
             boundsBuilder.include(latLng)
         }
 
@@ -154,6 +159,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             )
         )
     }
+
+    private fun getAddressName(lat: Double, lon: Double): String? {
+        var addressName: String? = null
+        val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
+        try {
+            val list = geocoder.getFromLocation(lat, lon, 1)
+            if (list != null && list.size != 0) {
+                addressName = list[0].getAddressLine(0)
+                Log.d(TAG, "getAddressName: $addressName")
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return addressName
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
