@@ -2,6 +2,7 @@ package com.dicoding.newsapp.ui.list
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,7 @@ class NewsFragment : Fragment() {
                             binding?.progressBar?.visibility = View.GONE
                             val newsData = result.data
                             newsAdapter.submitList(newsData)
+                            Log.d("Teston", newsData.toString())
                         }
                         is Result.Error -> {
                             binding?.progressBar?.visibility = View.GONE
