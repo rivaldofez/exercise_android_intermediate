@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.mystudentdata.adapter.StudentAndUniversityAdapter
 import com.dicoding.mystudentdata.adapter.StudentListAdapter
 import com.dicoding.mystudentdata.adapter.StudentWithCourseAdapter
 import com.dicoding.mystudentdata.adapter.UniversityAndStudentAdapter
 import com.dicoding.mystudentdata.databinding.ActivityMainBinding
+import com.dicoding.mystudentdata.helper.SortType
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,9 +58,39 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.action_sort -> {
+                showSortingPopupMenu()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun showSortingOptionMenu(isShow: Boolean) {
+        val view = findViewById<View>(R.id.action_sort) ?: return
+        view.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    private fun showSortingPopupMenu() {
+        val view = findViewById<View>(R.id.action_sort) ?: return
+        PopupMenu(this, view).run {
+            menuInflater.inflate(R.menu.sorting_menu, menu)
+            setOnMenuItemClickListener {
+                mainViewModel.changeSortType(
+                    when (it.itemId) {
+                        R.id.action_ascending -> SortType.ASCENDING
+                        R.id.action_descending -> SortType.DESCENDING
+                        else -> SortType.RANDOM
+                    }
+                )
+                true
+            }
+            show()
+        }
+    }
+
+
 
     private fun getStudent() {
         val adapter = StudentListAdapter()
