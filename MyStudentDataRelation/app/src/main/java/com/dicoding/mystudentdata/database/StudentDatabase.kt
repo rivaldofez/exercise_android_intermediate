@@ -9,7 +9,7 @@ import com.dicoding.mystudentdata.helper.InitialDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Student::class, University::class, Course::class, CourseStudentCrossRef::class], version = 1, exportSchema = false)
+@Database(entities = [Student::class, University::class, Course::class, CourseStudentCrossRef::class], version = 1, exportSchema = true)
 abstract class StudentDatabase : RoomDatabase() {
 
     abstract fun studentDao(): StudentDao
